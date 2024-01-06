@@ -6,7 +6,9 @@ use App\Models\User;
 use App\Repositories\Criteria\Contracts\CriteriaApplierInterface;
 use App\Repositories\Criteria\CriteriaApplier;
 use App\Repositories\User\Contracts\IndexRepositoryInterface;
+use App\Repositories\User\Contracts\ShowRepositoryInterface;
 use App\Repositories\User\IndexRepository;
+use App\Repositories\User\ShowRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -15,6 +17,10 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(IndexRepositoryInterface::class, IndexRepository::class);
         $this->app->when(IndexRepository::class)
+            ->needs(CriteriaApplierInterface::class)
+            ->give(fn() => new CriteriaApplier(User::class));
+        $this->app->bind(ShowRepositoryInterface::class, ShowRepository::class);
+        $this->app->when(ShowRepository::class)
             ->needs(CriteriaApplierInterface::class)
             ->give(fn() => new CriteriaApplier(User::class));
     }

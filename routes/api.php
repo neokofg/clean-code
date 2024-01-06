@@ -4,11 +4,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 
 use App\Http\Controllers\User\IndexController as UserI;
-use App\Http\Controllers\User\GetController as UserG;
-use App\Http\Controllers\User\UpdateController as UserU;
-use App\Http\Controllers\User\DeleteController as UserD;
+use App\Http\Controllers\User\ShowController as UserS;
 
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,9 +26,9 @@ Route::prefix("v1")->group(function () {
    });
    Route::prefix("user")->middleware(['auth:sanctum'])->group(function() {
        Route::get('/', UserI::class);
-       Route::get('/{id}', UserG::class);
-       Route::put('/{id}', UserU::class);
-       Route::delete('/{id}', UserD::class);
+       Route::get('/{id}', UserS::class);
+       Route::put('/{id}', );
+       Route::delete('/{id}', );
    });
    Route::prefix("posts")->group(function() {
        Route::get('/');

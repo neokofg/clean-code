@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Enums\UserColumn;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -40,6 +41,14 @@ class User extends Authenticatable
             UserColumn::Email->value => new Attribute(
                 get: fn(): string|null => $this->getAttribute(UserColumn::Email->value),
                 set: fn(string|null $value) => $this->setAttribute(UserColumn::Email->value, $value)
+            ),
+            UserColumn::CreatedAt->value => new Attribute(
+                get: fn(): Carbon => $this->getAttribute(UserColumn::CreatedAt->value),
+                set: fn(string|null $value) =>  $this->setAttribute(UserColumn::CreatedAt->value, $value)
+            ),
+            UserColumn::UpdatedAt->value => new Attribute(
+                get: fn(): Carbon => $this->getAttribute(UserColumn::UpdatedAt->value),
+                set: fn(string|null $value) =>  $this->setAttribute(UserColumn::UpdatedAt->value, $value)
             ),
         ];
     }

@@ -11,6 +11,6 @@
     <h1>Laravel Clean-Code Example</h1>
     <p>Hi,this is neoko!</p>
     <br>
-    <p>This is my project, laravel clean code example for you!</p>
+    <p>This is my project, laravel clean code template for me</p>
 </body>
 </html>
