@@ -33,4 +33,7 @@ Route::prefix("v1")->group(function () {
        Route::put('/{id}', UserU::class);
        Route::delete('/{id}', UserD::class);
    });
+   Route::prefix("posts")->group(function() {
+       Route::get('/');
+   });
 });

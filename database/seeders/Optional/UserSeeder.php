@@ -14,5 +14,8 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::factory(5)->create();
+        $user = User::factory()->create();
+        $token = $user->createToken('dev-token')->plainTextToken;
+        print(PHP_EOL . "TOKEN: " . $token . PHP_EOL);
     }
 }

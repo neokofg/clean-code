@@ -14,9 +14,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call([
-            OptionalUsers::class,
-            ImportantUsers::class
-        ]);
+        if(env('APP_ENV') == 'production') {
+            $this->call([
+                ImportantUsers::class
+            ]);
+        } else {
+            $this->call([
+                OptionalUsers::class,
+                ImportantUsers::class
+            ]);
+        }
     }
 }

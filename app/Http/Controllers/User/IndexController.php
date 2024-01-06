@@ -3,18 +3,24 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\UserRepository;
-use Illuminate\Http\Request;
+use App\Http\Requests\User\Contracts\IndexRequestInterface;
+use App\Presenters\User\Contracts\ListPresenterInterface;
+use App\UseCases\User\Contracts\IndexUseCaseInterface;
 
-class IndexController extends Controller
+final class IndexController extends Controller
 {
-    protected $userRepository;
-    public function __construct(UserRepository $userRepository)
+    public function __construct(
+        private IndexUseCaseInterface  $useCase,
+        private ListPresenterInterface $presenter
+    )
     {
-        $this->userRepository = $userRepository;
     }
-    public function __invoke(Request $request)
+    public function __invoke(IndexRequestInterface $request): mixed
     {
-        return $this->userRepository->getAll();
+        $requestDTO = $request->getValidated();
+
+        $responseDTO = $this->useCase->execute($requestDTO);
+
+        return $this->presenter->present($responseDTO);
     }
 }
