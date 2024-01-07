@@ -4,27 +4,24 @@ namespace App\Http\Controllers\Auth;
 
 use App\DTO\UserDTO;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\RegisterRequest;
-use App\Repositories\UserRepository;
+use App\Http\Requests\Auth\Contracts\RegisterRequestInterface;
+use App\Presenters\Auth\TokenPresenter;
+use App\UseCases\Auth\Contracts\RegisterUseCaseInterface;
 
 class RegisterController extends Controller
 {
-    protected $userRepository;
-    public function __construct(UserRepository $userRepository)
+    public function __construct(
+        private RegisterUseCaseInterface $useCase,
+        private TokenPresenter $presenter,
+    )
     {
-        $this->userRepository = $userRepository;
     }
-    public function __invoke(RegisterRequest $request)
+    public function __invoke(RegisterRequestInterface $request): mixed
     {
-        $userDTO = new UserDTO();
-        $userDTO->fillForCreation(
-            $request->name,
-            $request->email,
-            $request->password
-        );
-        $user = $this->userRepository->create($userDTO);
+        $requestDTO = $request->getValidated();
 
-        $token = $user->createToken('auth-token')->plainTextToken;
-        return response()->json(["token" => $token]);
+        $responseDTO = $this->useCase->execute($requestDTO);
+
+        return $this->presenter->present($responseDTO);
     }
 }

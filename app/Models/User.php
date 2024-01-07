@@ -31,6 +31,12 @@ class User extends Authenticatable
         return ($attribute->get)();
     }
 
+    public function setColumn(UserColumn $column, mixed $value): void
+    {
+        $attribute = $this->getColumns()[$column->value];
+        ($attribute->set)($value);
+    }
+
     private function getColumns(): array
     {
         return [
@@ -42,13 +48,16 @@ class User extends Authenticatable
                 get: fn(): string|null => $this->getAttribute(UserColumn::Email->value),
                 set: fn(string|null $value) => $this->setAttribute(UserColumn::Email->value, $value)
             ),
+            UserColumn::Password->value => new Attribute(
+                set: fn(string|null $value) => $this->setAttribute(UserColumn::Password->value, $value)
+            ),
             UserColumn::CreatedAt->value => new Attribute(
                 get: fn(): Carbon => $this->getAttribute(UserColumn::CreatedAt->value),
-                set: fn(string|null $value) =>  $this->setAttribute(UserColumn::CreatedAt->value, $value)
+                set: fn(Carbon $value) =>  $this->setAttribute(UserColumn::CreatedAt->value, $value)
             ),
             UserColumn::UpdatedAt->value => new Attribute(
                 get: fn(): Carbon => $this->getAttribute(UserColumn::UpdatedAt->value),
-                set: fn(string|null $value) =>  $this->setAttribute(UserColumn::UpdatedAt->value, $value)
+                set: fn(Carbon $value) =>  $this->setAttribute(UserColumn::UpdatedAt->value, $value)
             ),
         ];
     }
