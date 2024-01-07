@@ -22,7 +22,7 @@ class LoginUseCase implements LoginUseCaseInterface
             $response = $this->repository->make($requestDTO);
             return $response;
         } catch (Throwable $exception) {
-            throw new LoginUseCasesException('Произошла ошибка при попытке войти в аккаунт!', previous: $exception);
+            throw new LoginUseCasesException('Неверный логин или пароль!', previous: $exception);
         }
     }
 }
