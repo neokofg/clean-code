@@ -4,7 +4,7 @@ namespace App\DTO\Auth;
 
 use App\DTO\Auth\Contracts\RegisterRequestDTOInterface;
 
-class RegisterRequestDTO implements RegisterRequestDTOInterface
+readonly class RegisterRequestDTO implements RegisterRequestDTOInterface
 {
     public function __construct(
         public string   $name,
