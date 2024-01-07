@@ -3,7 +3,9 @@
 namespace App\Providers\Bindings;
 
 use App\Models\User;
+use App\Repositories\Auth\Contracts\LoginRepositoryInterface;
 use App\Repositories\Auth\Contracts\RegisterRepositoryInterface;
+use App\Repositories\Auth\LoginRepository;
 use App\Repositories\Auth\RegisterRepository;
 use App\Repositories\Criteria\Contracts\CriteriaApplierInterface;
 use App\Repositories\Criteria\CriteriaApplier;
@@ -27,5 +29,6 @@ class RepositoryServiceProvider extends ServiceProvider
             ->needs(CriteriaApplierInterface::class)
             ->give(fn() => new CriteriaApplier(User::class));
         $this->app->bind(RegisterRepositoryInterface::class, RegisterRepository::class);
+        $this->app->bind(LoginRepositoryInterface::class, LoginRepository::class);
     }
 }

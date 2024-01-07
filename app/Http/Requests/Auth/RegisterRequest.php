@@ -36,9 +36,9 @@ class RegisterRequest extends FormRequest implements RegisterRequestInterface
         ]);
 
         return new RegisterRequestDTO(
-            $requestParams[RegisterRequestParamEnum::Name->value],
-            $requestParams[RegisterRequestParamEnum::Email->value],
-            $requestParams[RegisterRequestParamEnum::Password->value],
+            $filter->checkRequestParam(RegisterRequestParamEnum::Name),
+            $filter->checkRequestParam(RegisterRequestParamEnum::Email),
+            $filter->checkRequestParam(RegisterRequestParamEnum::Password),
         );
     }
 }

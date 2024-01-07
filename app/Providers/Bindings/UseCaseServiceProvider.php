@@ -2,7 +2,9 @@
 
 namespace App\Providers\Bindings;
 
+use App\UseCases\Auth\Contracts\LoginUseCaseInterface;
 use App\UseCases\Auth\Contracts\RegisterUseCaseInterface;
+use App\UseCases\Auth\LoginUseCase;
 use App\UseCases\Auth\RegisterUseCase;
 use App\UseCases\User\Contracts\IndexUseCaseInterface;
 use App\UseCases\User\Contracts\ShowUseCaseInterface;
@@ -17,5 +19,6 @@ class UseCaseServiceProvider extends ServiceProvider
         $this->app->bind(IndexUseCaseInterface::class, IndexUseCase::class);
         $this->app->bind(ShowUseCaseInterface::class, ShowUseCase::class);
         $this->app->bind(RegisterUseCaseInterface::class, RegisterUseCase::class);
+        $this->app->bind(LoginUseCaseInterface::class, LoginUseCase::class);
     }
 }

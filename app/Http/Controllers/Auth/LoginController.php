@@ -3,18 +3,24 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\Auth\Contracts\LoginRequestInterface;
+use App\Presenters\Auth\Contracts\TokenPresenterInterface;
+use App\UseCases\Auth\Contracts\LoginUseCaseInterface;
 
 class LoginController extends Controller
 {
-    /**
-     * Handle the incoming request.
-     */
-    public function __invoke(LoginRequest $request)
+    public function __construct(
+        private LoginUseCaseInterface $useCase,
+        private TokenPresenterInterface $presenter,
+    )
     {
-        return Auth::attempt($request->all()) ?
-            response()->json(["token" => Auth::user()->createToken('auth-token')->plainTextToken]) :
-            response()->json(["error" => "Неверные данные!"], 401);
+    }
+    public function __invoke(LoginRequestInterface $request)
+    {
+        $requestDTO = $request->getValidated();
+
+        $responseDTO = $this->useCase->execute($requestDTO);
+
+        return $this->presenter->present($responseDTO);
     }
 }
